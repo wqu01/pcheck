@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Compare Prices</title>
+        <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">-->
+    </head>
+    <body>
+        <div id="container">
+            <div class="title">
+                <h1>Compare Prices</h1>
+            </div>
+            <div id="content">
+                <form method="post" action="{{ url_for('item') }}">
+                  <label for="item_name">Please enter an item name:</label>
+                  <input type="text" name="item_name" /><br />
+                  <input type="submit" />
+                </form>
+            </div>
+          </div>
+	<div id="priceresults">
+        {% block pricecontent %} {% endblock %}
+
+	</div>
+	<div id="chooseresults">
+	{% block content %} {% endblock %}
+	</div>
+
+
+    </body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block content %} 
+<div class="title">
+ 	<h1>Search Result</h1>
+</div>
+<p> There are multiple results, please select one </p>
+<form method="post" action="{{url_for('getOne')}}">
+{% for dict_item in results_list %}
+	<input type="radio" name="choosen" value={{dict_item['link']}} />
+	{{dict_item['title']}}</br>
+	<input type="hidden" name="product_name" value="{{dict_item['title']}}" />
+
+{% endfor %}
+<input type = "submit"/>
+</form>
+{% endblock %}
+
