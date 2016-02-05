@@ -103,14 +103,15 @@ def getRRSResults(item_name):
 	    	      'title':link.find('img')['alt'],
 	    	      'src':link.find('img')['src']}
 	        result_list.append(mydict)
+            return [result_list]
         else:
-            price=elem[0]
-            print price
+            #price=elem[0]
+            #print price
             #only one element so get link then get weight and price
             search_results = soup.findAll('div', {'class': 'image'}, limit=1)
             product_link = search_results[0].find('a')['href']
-            print product_link
-            getRRSWeight(product_link)
+            #print product_link
+            return getRRSPriceWeight(product_link)
 
     else:
         print "no products found"
@@ -120,6 +121,7 @@ def getRRSPriceWeight(product_link):
     soup = BS(html.content)
     elem = soup.findAll('div', {'class': 'description'})
     #for i in elem:
+    title = soup.title.string
     weight = elem[0].contents[19]
     print weight
     elem_price = soup.findAll('span', {'itemprop': 'price'})
@@ -127,6 +129,9 @@ def getRRSPriceWeight(product_link):
     print price
     dollars = Decimal(sub(r'[^\d.]', '', price)) /1160
     dollars = round(dollars, 2)
+    item_data = [title, dollars, weight]
+    return item_data
+
 
 @app.route('/')
 def index():
@@ -146,6 +151,9 @@ def item():
     else:
         result_list = JolseResults[0]
         return render_template('choose_results.html', results_list=result_list)
+
+    RRSResults = getRRSResults(item_name)
+    #RRSResults is a list with [title, dollars, weight]
 
 
 @app.route('/result', methods=['POST'])
