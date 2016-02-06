@@ -4,13 +4,17 @@
  	<h2>Search Result</h2>
 </div>
 <p> There are multiple results for <strong>{{store}}</strong>, please select one: </p>
-<form method="post" action="{{url_for('getOne')}}">
 {% for dict_item in results_list %}
-	<input type="radio" name="choosen" value={{dict_item['link']}} />
-	{{dict_item['title']}}</br>
+<form method="post" action="{{url_for('getOne')}}">
+    <br><img src={{dict_item['src']}}></br>
+    <br>
+    <input type="hidden" name="choosen" value={{dict_item['link']}} />   
+    {{dict_item['title']}}
+    </br>
 	<input type="hidden" name="product_name" value="{{dict_item['title']}}" />
-{% endfor %}
-<input type="submit"/>
+    <input type="submit" value="Select"/>
 </form>
+{% endfor %}
+
 {% endblock %}
 

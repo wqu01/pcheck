@@ -122,6 +122,8 @@ def item():
 def getOne():
     product_link = request.form['choosen']
     item_name=request.form['product_name']
+    #print product_link
+    #print item_name
     global RRSResults
     #if getting result for jolse
     if(product_link.find("roseroseshop")==-1):
