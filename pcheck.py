@@ -48,7 +48,9 @@ def getJolsePrice(link):
     soup2 = BS(html2.content)
     price = soup2.findAll('span', {'id': 'span_product_price_sale'}) 
     title = soup2.title.string
-    return [title, product_link, price[0].text]
+    image = soup2.find('div', {'class': 'keyImg '})
+    img_src = image.find('img')['src']
+    return [title, product_link, img_src, price[0].text]
 
 
 #RRS
@@ -90,7 +92,10 @@ def getRRSPriceWeight(product_link):
     price = elem_price[0].text
     dollars = Decimal(sub(r'[^\d.]', '', price)) /1160
     dollars = round(dollars, 2)
-    item_data = [title, product_link, dollars, weight]
+    img = soup.findAll('div', {'class': 'product-image cloud-zoom'})
+    image = img[0].find('img')['src']
+
+    item_data = [title, product_link, image, dollars, weight]
     return item_data
 
 
