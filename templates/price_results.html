@@ -1,11 +1,18 @@
 {% extends "index.html" %}
 {% block pricecontent %}
 <div class="title">
-        <h2>Search Result</h2>
+        <h2>Jolse Search Result</h2>
 </div>
 <div id="content">
-        <p> Searching for <strong>{{item_name}}</strong></p>
-	    <p> Price on Jolse is <strong>{{price}}</strong></p>
+        <div id="Jolse">
+                <p> Searching for <a href={{JolseResults[1]}}><strong>{{JolseResults[0]}}</strong></a></p>
+	        <p> Price on Jolse is <strong>{{JolseResults[2]}}</strong></p>
+        </div>
+        <div id="RRS">
+                <p> Searching for <a href={{RRSResults[1]}}><strong>{{RRSResults[0]}}</strong></a></p>
+	        <p> Price on RoseRoseShop is <strong>{{RRSResults[2]}}</strong></p>
+            <p> Item Weight is <strong>{{RRSResults[3]}}</strong></p>
+        </div>
 </div>
 {% endblock %}
 

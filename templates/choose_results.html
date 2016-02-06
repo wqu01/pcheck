@@ -3,7 +3,7 @@
 <div class="title">
  	<h2>Search Result</h2>
 </div>
-<p> There are multiple results, please select one: </p>
+<p> There are multiple results for <strong>{{store}}</strong>, please select one: </p>
 <form method="post" action="{{url_for('getOne')}}">
 {% for dict_item in results_list %}
 	<input type="radio" name="choosen" value={{dict_item['link']}} />

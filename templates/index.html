@@ -7,8 +7,10 @@
     <body>
         <div id="container">
             <div class="title">
-                <h1>Compare AB Prices</h1>
+                    <h1>Compare AB Prices</h1>
             </div>
+            <p> Search Jolse and Roseroseshop for prices </p>
+            <p> Be as specific as you can, search results are only from the first search page </p>
             <div id="content">
                 <form method="post" action="{{ url_for('item') }}">
                   <!-- <label for="item_name">Please enter an item name:</label>-->
@@ -18,11 +20,11 @@
             </div>
           </div>
 	<div id="priceresults">
-        {% block pricecontent %} {% endblock %}
-
+            {% block pricecontent %} {% endblock %}
 	</div>
+
 	<div id="chooseresults">
-	{% block content %} {% endblock %}
+            {% block content %} {% endblock %}
 	</div>
     </body>
 </html>
