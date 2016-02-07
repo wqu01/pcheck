@@ -1,3 +1,7 @@
+*{
+    font-family: Helvetica;
+}
+
 a{
     text-decoration: none;
 }
@@ -9,15 +13,56 @@ img{
     border-style: solid;
 }
 */
+body{
+    background-color: white;
+}
+.top-container{
+    color: white;    
+    text-align: center;
+    background-color: gray;
+    padding: 10px;
+    border-radius: 10px;
+    border: solid;
+}
+.title{
+    color: pink;
+    text-align: center;
+}
+
+input#search_box{
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    width: 25em;
+    height: 2em;
+    font-size: 15px;
+    border: transparent;
+    color: pink;
+}
+input#search_button{
+    -webkit-appearance: none;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    width: 5em;
+    height: 2em;
+    background-color: pink;
+    border: transparent;
+}
+
 #Jolse{
     float: left;
-    border-style: solid;
     padding: 10px;
-    max-width: 35%;
+    width: 35%;
+    border-style: solid; 
+    border-size: 1px; 
+    margin-left: 10%; 
 }
 #RRS{
-    margin-left: 40%;
+    float: right;
+    margin-right: 10%;
     border-style: solid;
+    border-size: 1px;
     padding: 10px;
-    max-width: 35%;
+    width: 35%;
 }
