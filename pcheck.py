@@ -111,6 +111,10 @@ def item():
     #return render_template('search_results.html')
     global JolseResults
     JolseResults = getJolseResults(item_name)
+    global RRSResults 
+    RRSResults = getRRSResults(item_name)
+    return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
+    """
     if(len(JolseResults) > 1):
         global RRSResults
         RRSResults = getRRSResults(item_name)
@@ -122,6 +126,7 @@ def item():
     else:
         result_list = JolseResults[0]
         return render_template('choose_results.html',store="Jolse", results_list=result_list)
+    """
 
 @app.route('/result', methods=['POST'])
 def getOne():
@@ -129,22 +134,24 @@ def getOne():
     item_name=request.form['product_name']
     #print product_link
     #print item_name
+       #if getting result for jolse
     global RRSResults
-    #if getting result for jolse
+
     if(product_link.find("roseroseshop")==-1):
         global JolseResults
         JolseResults = getJolsePrice(product_link)
         #get RRS data
-        RRSResults = getRRSResults(globkeyword)
-        if(len(RRSResults) > 1):
-            return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
-        else:
-            result_list = RRSResults[0]
-            return render_template('choose_results.html', store = "Roseroseshop",results_list = result_list)
+        #RRSResults = getRRSResults(globkeyword)
+        #if(len(RRSResults) > 1):
+        return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
+        #else:
+        #    result_list = RRSResults[0]
+        #    return render_template('choose_results.html', store = "Roseroseshop",results_list = result_list)
     #if get result for rrs
     elif(product_link.find('roseroseshop')!=-1):
+        print "rrs more than one"
         RRSResults = getRRSPriceWeight(product_link)
         return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
-    return
+    #return
 if __name__ == '__main__':
     app.run(debug=True)
