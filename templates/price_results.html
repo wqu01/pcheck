@@ -3,7 +3,6 @@
 <div class="title">
         <h2>Search Results</h2>
 </div>
-<div id="content">
         {% macro choose_results(results_list) %} 
             <p> There are multiple results, please select one: </p>
             {% for dict_item in results_list %}
@@ -19,38 +18,32 @@
             {% endfor %}
         {%- endmacro %}
 
+
+<div class="content">
         <div id="Jolse">
                 <h3> Jolse </h3>
                 {# if size of JolseResults > 1 there is data #}
                 {% if(JolseResults|length > 1) %}
                 <img src={{JolseResults[2]}}>
                 <p> Searching for <a href={{JolseResults[1]}}><strong>{{JolseResults[0]}}</strong></a></p>
-	            <p> Price on Jolse is <strong>{{JolseResults[3]}}</strong></p>
-                
+	            <p> Price on Jolse is <strong>{{JolseResults[3]}}</strong></p>  
                 {# elif size is 1 then there is a dictionary in the list #}
                 {% elif(JolseResults|length == 1) %}
-                    {{ choose_results(JolseResults[0]) }} {% endif %}
-
+                    {{ choose_results(JolseResults[0]) }}
+                {% endif %}
         </div>
-
-
-
-
-
         <div id="RRS">
                 <h3> RoseRoseShop </h3>
+
                 {% if(RRSResults|length > 1) %}
                 <img src={{RRSResults[2]}}>
                 <p> Searching for <a href={{RRSResults[1]}}><strong>{{RRSResults[0]}}</strong></a></p>
 	            <p> Price on RoseRoseShop is <strong>{{RRSResults[3]}}</strong></p>
-                <p> Item Weight is <strong>{{RRSResults[4]}}</strong></p>
-                
+                <p> Item Weight is <strong>{{RRSResults[4]}}</strong></p>   
+
                 {% elif(RRSResults|length == 1) %}
                     {{ choose_results(RRSResults[0]) }}
                 {% endif %}
-
-
-
         </div>
 </div>
 {% endblock %}
