@@ -1,5 +1,6 @@
 *{
     font-family: Helvetica;
+    font-weight: 100;
 }
 
 a{
@@ -14,55 +15,70 @@ img{
 }
 */
 body{
-    background-color: white;
+    margin: 0px;    
+}
+h1{
+    color: #ffb3c0;
+    /*font-size: 50px;*/
 }
 .top-container{
     color: white;    
     text-align: center;
-    background-color: gray;
-    padding: 10px;
-    border-radius: 10px;
-    border: solid;
-}
-.title{
-    color: pink;
-    text-align: center;
+    padding: 20px 0px;
+    /*width: 100%;*/
+    background-color: #e0e0eb;
+    /*border-radius: 10px;*/
 }
 
-input#search_box{
+input{
+    background-color:#ffccd6;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+    border: transparent;
+
+}
+input#search_box{
     width: 25em;
     height: 2em;
     font-size: 15px;
-    border: transparent;
-    color: pink;
+    color: white;
+    /*background-color: pink;*/
 }
 input#search_button{
     -webkit-appearance: none;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
     color: white;
     font-size: 15px;
     width: 5em;
     height: 2em;
-    background-color: pink;
-    border: transparent;
+    /*background-color: pink;*/
 }
+input#select_button{
+    height: 3em;
 
+}
+#price-container{
+    text-align: center;
+    position: relative;
+}
+.content{
+    position: absolute;
+    width: 100%;
+    border: transparent;
+    background: radial-gradient(circle, #e0e0eb 20%, transparent 20%),
+                radial-gradient(circle, #e0e0eb 20%, white 20%) 60px 60px;
+    background-size:100px 100px; 
+}
 #Jolse{
     float: left;
     padding: 10px;
     width: 35%;
-    border-style: solid; 
-    border-size: 1px; 
     margin-left: 10%; 
+    background-color: white;
 }
 #RRS{
     float: right;
     margin-right: 10%;
-    border-style: solid;
-    border-size: 1px;
     padding: 10px;
     width: 35%;
+    background-color: white;
 }

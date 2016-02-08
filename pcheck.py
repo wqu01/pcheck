@@ -28,7 +28,7 @@ def getJolseResults(item_name):
         return JolseData
     #if no result
     elif result_num == '0':
-        return [item_name, "not found", "not found"]
+        return [item_name, "/", "/", "not found"]
 
     else: #output multiple results 	
         result_list = []
@@ -80,7 +80,7 @@ def getRRSResults(item_name):
             return getRRSPriceWeight(product_link)
 
     else: 
-        return [item_name, "not found", "not found"]
+        return [item_name, "/", "/", "not found", "not found"]
 
 def getRRSPriceWeight(product_link):
     html = requests.get(product_link)

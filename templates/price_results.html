@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block price_content %}
-<div class="title">
+<div class="head2">
         <h2>Search Results</h2>
 </div>
         {% macro choose_results(results_list) %} 
@@ -13,7 +13,8 @@
                 {{dict_item['title']}}
                 </br>
 	            <input type="hidden" name="product_name" value="{{dict_item['title']}}" />
-                <input type="submit" value="Select"/>
+                <p></p>
+                <input type="submit" value="Select" id="select_button"/>
                 </form>
             {% endfor %}
         {%- endmacro %}
@@ -25,8 +26,9 @@
                 {# if size of JolseResults > 1 there is data #}
                 {% if(JolseResults|length > 1) %}
                 <img src={{JolseResults[2]}}>
-                <p> <a href={{JolseResults[1]}}><strong>{{JolseResults[0]}}</strong></a></p>
-	            <p> Price: <strong>{{JolseResults[3]}}</strong></p>  
+                <p> <a href={{JolseResults[1]}}>{{JolseResults[0]}}</a></p>
+	            <p> Price: {{JolseResults[3]}}</p> 
+                <br></br> 
                 {# elif size is 1 then there is a dictionary in the list #}
                 {% elif(JolseResults|length == 1) %}
                     {{ choose_results(JolseResults[0]) }}
@@ -37,9 +39,9 @@
 
                 {% if(RRSResults|length > 1) %}
                 <img src={{RRSResults[2]}}>
-                <p> <a href={{RRSResults[1]}}><strong>{{RRSResults[0]}}</strong></a></p>
-	            <p> Price: <strong>{{RRSResults[3]}}</strong></p>
-                <p> Weight: <strong>{{RRSResults[4]}}</strong></p>   
+                <p> <a href={{RRSResults[1]}}>{{RRSResults[0]}}</a></p>
+                <p> Price: {{RRSResults[3]}}</p>
+                <p> Weight: {{RRSResults[4]}}</p>   
 
                 {% elif(RRSResults|length == 1) %}
                     {{ choose_results(RRSResults[0]) }}

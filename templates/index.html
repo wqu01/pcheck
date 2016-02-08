@@ -6,7 +6,7 @@
     </head>
     <body>
         <div class="top-container">
-            <div class="title">
+            <div class="head1">
                     <h1>Compare AB Prices</h1>
             </div>
             <p> Search Jolse and Roseroseshop for prices </p>
@@ -14,13 +14,13 @@
             <div id="search_form">
                 <form method="post" action="{{ url_for('item') }}" id="search">
                   <!-- <label for="item_name">Please enter an item name:</label>-->
-                  <input type="text" id="search_box" placeholder="Enter an item name" name="item_name" />
-                  <input type="submit" id="search_button" />
+                  <input type="text" id="search_box" placeholder=" Enter an item name" name="item_name" />
+                  <input type="submit" id="search_button" value="Search" />
                 </form>
             </div>
-          </div>
+        </div>
 
-	    <div id="price-content">
+	    <div id="price-container">
             {% block price_content %} {% endblock %}
 	    </div>
 
