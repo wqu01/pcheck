@@ -103,9 +103,12 @@ def getRRSPriceWeight(product_link):
 def index():
     return render_template('index.html')
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET'])
 def item():    
-    item_name = request.form['item_name']
+    item_name = request.args['item_name']
+    return getItemData(item_name)
+
+def getItemData(item_name):
     global globkeyword
     globkeyword = item_name
     #return render_template('search_results.html')
