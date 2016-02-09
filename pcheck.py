@@ -25,11 +25,11 @@ def getJolseResults(item_name):
     #if only one result then get and return data
     if result_num == '1':
 	product_link = result_links[0].find('a')['href']
-	JolseData = getJolsePrice(product_link)
+	JolseData = getJolsePrice(home+product_link)
         return JolseData
     #if no result
     elif result_num == '0':
-        return [item_name, "/", "/", "not found"]
+        return [item_name, "", "", "not found"]
 
     else: #output multiple results 	
         result_list = []
@@ -43,7 +43,7 @@ def getJolseResults(item_name):
 
 #getting the price data from the product page
 def getJolsePrice(product_link):
-    home = 'http://jolse.com'	
+    #home = 'http://jolse.com'	
     #product_link = home + link
     #print product_link
     html2 = requests.get(product_link)
@@ -82,7 +82,7 @@ def getRRSResults(item_name):
             return getRRSPriceWeight(product_link)
 
     else: 
-        return [item_name, "/", "/", "not found", "not found"]
+        return [item_name, "", "", "not found", "not found"]
 
 def getRRSPriceWeight(product_link):
     html = requests.get(product_link)
@@ -123,7 +123,7 @@ def getTKResults(item_name):
             getTKPriceWeight(product_link)
 
     else:
-        return [item_name, "/", "/", "not found", "not found"]
+        return [item_name, "", "", "not found", "not found"]
 
 def getTKPriceWeight(product_link):
     html = requests.get(product_link)
@@ -188,4 +188,4 @@ def getOne():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-    app.run(debug=False)
+    #app.run(debug=True)
