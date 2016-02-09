@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 JolseResults = []
 RRSResults = []
+TKResults = []
 globkeyword = ""
 #Jolse
 def getJolseResults(item_name):
@@ -34,16 +35,17 @@ def getJolseResults(item_name):
         result_list = []
         for link in result_links:	
     	    if(link.find('a')):
-	        mydict = {'link': link.find('a')['href'],
+	        mydict = {'link': home+link.find('a')['href'],
 	    	      'title':link.find('a')['title'],
 	    	      'src':link.find('img')['src']}
 	        result_list.append(mydict)
         return [result_list]
 
 #getting the price data from the product page
-def getJolsePrice(link):
+def getJolsePrice(product_link):
     home = 'http://jolse.com'	
-    product_link = home + link
+    #product_link = home + link
+    print product_link
     html2 = requests.get(product_link)
     soup2 = BS(html2.content)
     price = soup2.findAll('span', {'id': 'span_product_price_sale'}) 
@@ -97,7 +99,46 @@ def getRRSPriceWeight(product_link):
 
     item_data = [title, product_link, image, dollars, weight]
     return item_data
+#TesterKorea
+def getTKResults(item_name):
+    home = 'http://www.testerkorea.com'
+    keyword = item_name
+    keyword = keyword.replace(' ', '+')
+    site = 'http://testerkorea.com/search?q=' + keyword
+    html = requests.get(site)
+    soup = BS(html.content)
+    elem = soup.findAll('div', {'class': 'col-xs-12 item-picture'})
+    if(len(elem)>0):
+        if(len(elem) > 2):
+            result_list = []
+            for link in elem:	
+                if(link.find('a')):
+	            mydict = {'link': home+link.find('a')['href'],
+	    	      'title':link.find('img')['alt'],
+	    	      'src':link.find('img')['src']}
+	        result_list.append(mydict)
+            return [result_list]
+        else:
+            product_link = home+elem[0].find('a')['href']
+            getTKPriceWeight(product_link)
 
+    else:
+        return [item_name, "/", "/", "not found", "not found"]
+
+def getTKPriceWeight(product_link):
+    html = requests.get(product_link)
+    soup = BS(html.content)
+    title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
+    title = title_elem.text
+    weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
+    weight = weight_elem[2].text
+    elem_price = soup.find('span', {'class': 'currency retailUSD'})
+    price = elem_price.text
+    img = soup.find('img', {'id': 'gallery-view'})
+    img_src = img['src']
+    
+    item_data = [title, product_link, img_src, price, weight]
+    return item_data
 
 @app.route('/')
 def index():
@@ -116,45 +157,33 @@ def getItemData(item_name):
     JolseResults = getJolseResults(item_name)
     global RRSResults 
     RRSResults = getRRSResults(item_name)
-    return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
-    """
-    if(len(JolseResults) > 1):
-        global RRSResults
-        RRSResults = getRRSResults(item_name)
-        if(len(RRSResults) > 1):
-            return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
-        else:
-            result_list = RRSResults[0]
-            return render_template('choose_results.html', store="Roseroseshop", results_list = result_list)
-    else:
-        result_list = JolseResults[0]
-        return render_template('choose_results.html',store="Jolse", results_list=result_list)
-    """
+    global TKResults
+    TKResults = getTKResults(item_name)
+    return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults, TKResults=TKResults)
 
 @app.route('/result', methods=['POST'])
 def getOne():
     product_link = request.form['choosen']
     item_name=request.form['product_name']
-    #print product_link
-    #print item_name
-       #if getting result for jolse
+    #if getting result for jolse
     global RRSResults
-
-    if(product_link.find("roseroseshop")==-1):
+    global TKResults
+    if(product_link.find("jolse")!=-1):
         global JolseResults
         JolseResults = getJolsePrice(product_link)
-        #get RRS data
-        #RRSResults = getRRSResults(globkeyword)
-        #if(len(RRSResults) > 1):
-        return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
-        #else:
-        #    result_list = RRSResults[0]
-        #    return render_template('choose_results.html', store = "Roseroseshop",results_list = result_list)
+        return render_template('price_results.html', 
+                JolseResults=JolseResults, RRSResults=RRSResults, TKResults=TKResults)
     #if get result for rrs
     elif(product_link.find('roseroseshop')!=-1):
-        print "rrs more than one"
         RRSResults = getRRSPriceWeight(product_link)
-        return render_template('price_results.html', JolseResults=JolseResults, RRSResults=RRSResults)
+        return render_template('price_results.html', 
+                JolseResults=JolseResults, RRSResults=RRSResults, TKResults=TKResults)
+
+    elif(product_link.find('testerkorea')!=-1):
+        TKResults = getTKPriceWeight(product_link)
+        return render_template('price_results.html', 
+                JolseResults=JolseResults, RRSResults=RRSResults, TKResults=TKResults)
+
     #return
 if __name__ == '__main__':
     app.run(debug=True)
