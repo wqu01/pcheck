@@ -4,7 +4,7 @@ import requests
 #import urllib2
 from re import sub
 from decimal import Decimal
-
+import os
 app = Flask(__name__)
 
 JolseResults = []
@@ -186,4 +186,6 @@ def getOne():
 
     #return
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+    app.run(debug=False)
