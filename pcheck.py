@@ -45,7 +45,7 @@ def getJolseResults(item_name):
 def getJolsePrice(product_link):
     home = 'http://jolse.com'	
     #product_link = home + link
-    print product_link
+    #print product_link
     html2 = requests.get(product_link)
     soup2 = BS(html2.content)
     price = soup2.findAll('span', {'id': 'span_product_price_sale'}) 
