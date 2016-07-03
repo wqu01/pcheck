@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="pcheckApp">
     <head>
         <title>AB Price Compare</title>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <link rel=stylesheet type=text/css href="%% url_for('static', filename='style.css') %%">
+        <script type="text/javascript" src="%% url_for('static', filename='js/angular.min.js') %%"></script>
+        <script type="text/javascript" src="%% url_for('static', filename='app.js') %%"></script>
+
+
     </head>
-    <body>
+    <body ng-controller='SearchController'>
         <div class="top-container">
             <div class="head1">
                     <h1>Compare AB Prices</h1>
@@ -13,17 +17,102 @@
             <p> Be as specific as you can, search results are only from the first search page </p>
             <p> Ex: Suncreen, Nature Republic Mask, Cosrx Blackhead liquid 
             <div id="search_form">
-                <form action="{{ url_for('item') }}" id="search">
+                    <!--<form action="{{ url_for('item') }}" id="search">-->
+                    <form>
                   <!-- <label for="item_name">Please enter an item name:</label>-->
-                  <input type="text" id="search_box" placeholder=" Enter an item name" name="item_name" />
-                  <input type="submit" id="search_button" value="Search" />
+                  <input type="text" id="search_box" placeholder=" Enter an item name" name="item_name" ng-model='item_name'/>
+                  <input type="submit" id="search_button" value="Search" ng-click='search()' />
                 </form>
             </div>
         </div>
 
 	    <div class="price-container">
-            {% block price_content %} {% endblock %}
-	    </div>
+                <!-- {% block price_content %} {% endblock %} -->
+            <div class="head2">
+                <h2>Search Results</h2>
+            </div>
+            <div class="content">
+                <section id="Jolse">
+                        <h3> Jolse </h3>
+                        <!--  if size of JolseResults > 1 there is data  -->
+                        <!--  if(JolseResults|length > 1)  -->
+                        <div ng-if="jolseResults.length > 1">
+                        <img src="{{ jolseResults[2] }}">
+                        <p> <a href="{{ jolseResults[1] }}">{{ jolseResults[0] }}</a></p>
+                        <p> Price: {{ jolseResults[3] }}</p> 
+                        <input ng-if="jolseResults[3] !== 'not found'" type="submit" value="Add" id="select_button" ng-click="addJolse(jolseResults)"/>
+                        </div>
+                        <br></br> 
+                        <!--  elif size is 1 then there is a dictionary in the list -->
+                         <div ng-if="jolseResults.length === 1">
+                            <p> There are multiple results, please select one: </p>
+                            <div ng-repeat="dict_item in jolseResults[0]">
+                            <form>
+                                <br><img src="{{dict_item['src']}}"></br>
+                                <br>             
+                                {{dict_item['title']}}
+                                </br>
+                                <p></p>
+                                <input type="submit" value="Select" id="select_button" ng-click="selectJolse(dict_item['link'])"/>
+                                </form>
+                            </div>
+                         </div>
+                </section>
+                <section id="RRS">
+                        <h3> RoseRoseShop </h3>
+                        <!--  if size of JolseResults > 1 there is data  -->
+                        <!--  if(JolseResults|length > 1)  -->
+                        <div ng-if="rrsResults.length > 1">
+                        <img src="{{ rrsResults[2] }}">
+                        <p> <a href="{{ rrsResults[1] }}">{{ rrsResults[0] }}</a></p>
+                        <p> Price: {{ rrsResults[3] }}</p> 
+                        <input ng-if="rrsResults[3] !== 'not found'" type="submit" value="Add" id="select_button" ng-click="addRRS(rrsResults)"/>
+                        </div>
+                        <br></br> 
+                        <!--  elif size is 1 then there is a dictionary in the list -->
+                         <div ng-if="rrsResults.length === 1">
+                            <p> There are multiple results, please select one: </p>
+                            <div ng-repeat="dict_item in rrsResults[0]">
+                            <form>
+                                <br><img src="{{dict_item['src']}}"></br>
+                                <br>             
+                                {{dict_item['title']}}
+                                </br>
+                                <p></p>
+                                <input type="submit" value="Select" id="select_button" ng-click="selectRRS(dict_item['link'])"/>
+
+                                </form>
+                            </div>
+                         </div>
+                </section>
+                <section id="TK">
+                        <h3> TesterKorea </h3>
+                        <!--  if size of JolseResults > 1 there is data  -->
+                        <!--  if(JolseResults|length > 1)  -->
+                        <div ng-if="tkResults.length > 1">
+                        <img src="{{ tkResults[2] }}">
+                        <p> <a href="{{ tkResults[1] }}">{{ tkResults[0] }}</a></p>
+                        <p> Price: {{ tkResults[3] }}</p> 
+                        <input ng-if="tkResults[3] !== 'not found'" type="submit" value="Add" id="select_button" ng-click="addTK(tkResults)"/>
+                        </div>
+                        <br></br> 
+                        <!--  elif size is 1 then there is a dictionary in the list -->
+                         <div ng-if="tkResults.length === 1">
+                            <p> There are multiple results, please select one: </p>
+                            <div ng-repeat="dict_item in tkResults[0]">
+                            <form>
+                                <br><img src="{{dict_item['src']}}"></br>
+                                <br>             
+                                {{dict_item['title']}}
+                                </br>
+                                <p></p>
+                                <input type="submit" value="Select" id="select_button" ng-click="selectTK(dict_item['link'])"/>
+                                </form>
+                            </div>
+                         </div>
+                </section>
+              </div>
+        </div> <!-- price container -->
 
     </body>
 </html>
