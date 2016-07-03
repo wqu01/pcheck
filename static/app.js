@@ -3,19 +3,28 @@
 angular.module('pcheckApp', [])
 	.controller('SearchController', ['$scope', '$http', function($scope, $http){
 		$scope.search = function(){
-			$http.get("/jolseresults/"+$scope.item_name)
-	    		.then(function(response) {
-	        		$scope.jolseResults = response.data;
-	    	});
-
+			
 	    	//make another request for rrs and tk
+	    	$http.get("/tkresults/"+$scope.item_name)
+	    		.then(function successCallback(response) {
+	        		$scope.tkResults = response.data;
+	        		
+
+			}, function erroCallback(response){
+				
+			});
 	    	$http.get("/rrsresults/"+$scope.item_name)
 	    		.then(function(response) {
 	        		$scope.rrsResults = response.data;
+	        		
 	    	});
-	    	$http.get("/tkresults/"+$scope.item_name)
+	    	$http.get("/jolseresults/"+$scope.item_name)
 	    		.then(function(response) {
-	        		$scope.tkResults = response.data;});
+	        		$scope.jolseResults = response.data;
+	        		
+	    	});
+
+	    			
     	};
 
     	//when mkaing get price call pass in product_num for jolse

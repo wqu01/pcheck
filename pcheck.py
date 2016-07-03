@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for
 from bs4 import BeautifulSoup as BS
 import requests
+import json
 #import urllib2
 from re import sub
 from decimal import Decimal
@@ -92,14 +93,30 @@ class TKResults(Resource):
                           'title':link.find('img')['alt'],
                           'src':link.find('img')['src']}
                     result_list.append(mydict)
+                print result_list
                 return [result_list]
             else:
+                print "only 1 result"
                 product_link = home+elem[0].find('a')['href']
-                getTKPriceWeight(product_link)
+                #getTKPriceWeight(product_link)
+                html = requests.get(product_link)
+                soup = BS(html.content)
+                title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
+                title = title_elem.text
+                weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
+                weight = weight_elem[1].text
+                elem_price = soup.find('span', {'class': 'currency retailUSD'})
+                price = elem_price.text
+                img = soup.find('img', {'id': 'gallery-view'})
+                img_src = img['src']
+                
+                item_data = [title, product_link, img_src, price, weight]
+                print "tkprice weight"
+                print json.dumps(item_data)
+                return item_data
 
         else:
             return [item_name, "", "", "not found", "not found"]
-
 
 class JolsePrice(Resource):
     #getting the price data from the product page
@@ -158,7 +175,27 @@ def getJolsePrice(product_link):
     title = soup2.title.string
     image = soup2.find('div', {'class': 'keyImg '})
     img_src = image.find('img')['src']
-    return [title, product_link, img_src, price[0].text]
+    item_data = [title, product_link, img_src, price[0].text]
+    #print "jolse 1 item return"
+    #print item_data
+    return item_data
+
+def getTKPriceWeight(product_link):
+        html = requests.get(product_link)
+        soup = BS(html.content)
+        title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
+        title = title_elem.text
+        weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
+        weight = weight_elem[1].text
+        elem_price = soup.find('span', {'class': 'currency retailUSD'})
+        price = elem_price.text
+        img = soup.find('img', {'id': 'gallery-view'})
+        img_src = img['src']
+        
+        item_data = [title, product_link, img_src, price, weight]
+        #print "tkprice weight"
+        #print json.dumps(item_data)
+        return item_data
 
 def getRRSPriceWeight(product_link):
     html = requests.get(product_link)
@@ -176,20 +213,7 @@ def getRRSPriceWeight(product_link):
     item_data = [title, product_link, image, dollars, weight]
     return item_data
 
-def getTKPriceWeight(product_link):
-    html = requests.get(product_link)
-    soup = BS(html.content)
-    title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
-    title = title_elem.text
-    weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
-    weight = weight_elem[2].text
-    elem_price = soup.find('span', {'class': 'currency retailUSD'})
-    price = elem_price.text
-    img = soup.find('img', {'id': 'gallery-view'})
-    img_src = img['src']
-    
-    item_data = [title, product_link, img_src, price, weight]
-    return item_data
+
 
 jinja_options = app.jinja_options.copy()
 jinja_options.update(dict(
