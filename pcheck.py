@@ -93,26 +93,31 @@ class TKResults(Resource):
                           'title':link.find('img')['alt'],
                           'src':link.find('img')['src']}
                     result_list.append(mydict)
-                print result_list
+                #print result_list
                 return [result_list]
             else:
-                print "only 1 result"
+                #print "only 1 result"
                 product_link = home+elem[0].find('a')['href']
                 #getTKPriceWeight(product_link)
                 html = requests.get(product_link)
                 soup = BS(html.content)
                 title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
                 title = title_elem.text
+                find_weight_elem = soup.findAll('div', {'class': 'col-md-3 col-xs-3'})
                 weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
-                weight = weight_elem[1].text
+                #can be either 1 or 2
+                if(find_weight_elem[1].text == 'Capacity'):
+                    weight = weight_elem[2].text
+                else:
+                    weight = weight_elem[1].text
                 elem_price = soup.find('span', {'class': 'currency retailUSD'})
                 price = elem_price.text
                 img = soup.find('img', {'id': 'gallery-view'})
                 img_src = img['src']
                 
                 item_data = [title, product_link, img_src, price, weight]
-                print "tkprice weight"
-                print json.dumps(item_data)
+                #print "tkprice weight"
+                #print json.dumps(item_data)
                 return item_data
 
         else:
@@ -155,8 +160,13 @@ class TKPriceWeight(Resource):
         soup = BS(html.content, "html.parser")
         title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
         title = title_elem.text
+        find_weight_elem = soup.findAll('div', {'class': 'col-md-3 col-xs-3'})
         weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
-        weight = weight_elem[2].text
+        #can be either 1 or 2
+        if(find_weight_elem[1].text == 'Capacity'):
+            weight = weight_elem[2].text
+        else:
+            weight = weight_elem[1].text
         elem_price = soup.find('span', {'class': 'currency retailUSD'})
         price = elem_price.text
         img = soup.find('img', {'id': 'gallery-view'})
@@ -185,8 +195,16 @@ def getTKPriceWeight(product_link):
         soup = BS(html.content)
         title_elem = soup.find('div', {'class': 'col-md-12 product-name'})
         title = title_elem.text
+
+        find_weight_elem = soup.findAll('div', {'class': 'col-md-3 col-xs-3'})
         weight_elem = soup.findAll('div', {'class': 'col-md-9 col-xs-9'})
-        weight = weight_elem[1].text
+        #can be either 1 or 2
+        if(find_weight_elem[1].text == 'Capacity'):
+            weight = weight_elem[2].text
+        else:
+            weight = weight_elem[1].text
+
+                
         elem_price = soup.find('span', {'class': 'currency retailUSD'})
         price = elem_price.text
         img = soup.find('img', {'id': 'gallery-view'})

@@ -12,13 +12,13 @@
     <body ng-controller='SearchController'>
         <div class="top-container">
             <button ng-click="toggleCart()" class="btn pull-right" type="button"> {{showCart ? 'Hide Cart':'Show Cart'}}</button>
-            <br></br>
+            <a href="#cart"><button class="btn pull-right" id="cartButton" type="button"> Go to Cart</button></a>
             <div class="head1">
                     <h1>Compare AB Prices</h1>
             </div>
             <p> Search Jolse, TesterKorea, and Roseroseshop for prices </p>
-            <p> Be as specific as you can, search results are only from the first search page </p>
-            <p> Ex: Suncreen, Nature Republic Mask, Cosrx Blackhead liquid 
+            <p> Add item to cart to get total shipping cost </p>
+            <p> shipping cost are for airmail </p> 
             <div id="search_form">
                     <!--<form action="{{ url_for('item') }}" id="search">-->
                     <form>
@@ -30,7 +30,7 @@
         </div>
 
          <div ng-show="showCart" class="cart-container">
-            <p>show cart</p>
+            <h2 id="cart" class="head2">Your Cart</h2>
             <div class="cart-content">
                     <section id="Jolse">
                             <h3> Jolse </h3>
@@ -42,10 +42,27 @@
                     </section>
                     <section id="RRS">
                             <h3> RoseRoseShop </h3>
+                            <div ng-repeat="cartItem in rrsCartList">
+                                    <p>{{$index+1}}. {{ cartItem.item_name }}</p>
+                                    <p>{{ cartItem.item_price | currency }} 
+                                    <span class="right">{{cartItem.item_weight}}g </span></p>
+
+                            </div>
+                            <p>Shipping Cost: {{rrsShippingCost |currency}} <p>
+                            <p>Total Price: {{rrsTotalPrice+rrsShippingCost | currency}} </p>
+
 
                     </section>
                     <section id="TK">
                             <h3> TesterKorea </h3>
+                            <div ng-repeat="cartItem in tkCartList">
+                                    <p>{{$index+1}}. {{ cartItem.item_name }}</p>
+                                    <p>{{ cartItem.item_price | currency }} 
+                                    <span class="right">{{cartItem.item_weight}}g </span></p>
+
+                            </div>
+                            <p>Shipping Cost: {{tkShippingCost |currency}} <p>
+                            <p>Total Price: {{tkTotalPrice+tkShippingCost | currency}} </p>
 
                     </section>
             </div>

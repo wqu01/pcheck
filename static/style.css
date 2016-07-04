@@ -92,12 +92,21 @@ input#select_button{
 .btn{
     margin-right: 20px;
     background-color: pink;
-}
-.cart-container{
-    background-color: green;
+    position: fixed;
+    right: 0;
+    bottom: 20px;
+    z-index: 1;
 }
 .head2{
     clear: both;
+    text-align: center;
 }
-
+.right{
+    float: right;
+}
+#cartButton{
+    bottom: 60px;
+    text-decoration: none;
+    color: white;
+}
 
