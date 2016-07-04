@@ -53,4 +53,9 @@ angular.module('pcheckApp', [])
 	        });
     	};
 
+        $scope.showCart = false;
+        $scope.toggleCart = function(){
+            $scope.showCart = !$scope.showCart;
+        };
+
 	}]);

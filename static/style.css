@@ -89,7 +89,13 @@ input#select_button{
     width: 25%;
     background-color: white;
 }
-
+.btn{
+    margin-right: 20px;
+    background-color: pink;
+}
+.cart-container{
+    background-color: green;
+}
 
 
 
