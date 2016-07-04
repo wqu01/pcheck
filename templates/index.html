@@ -29,12 +29,30 @@
             </div>
         </div>
 
-	    <div class="price-container">
-                <!-- {% block price_content %} {% endblock %} -->   
-        <div ng-show="showCart" class="cart-container">
+         <div ng-show="showCart" class="cart-container">
             <p>show cart</p>
+            <div class="cart-content">
+                    <section id="Jolse">
+                            <h3> Jolse </h3>
+                            <div ng-repeat="cartItem in jolseCartList">
+                                    <p>{{$index+1}}. {{ cartItem.item_name }}</p>
+                                    <p>{{ cartItem.item_price | currency }}</p>
+                            </div>
+                            <p>Total: {{jolseTotal | currency}} </p>
+                    </section>
+                    <section id="RRS">
+                            <h3> RoseRoseShop </h3>
+
+                    </section>
+                    <section id="TK">
+                            <h3> TesterKorea </h3>
+
+                    </section>
+            </div>
         </div>
 
+	    <div class="price-container">
+                <!-- {% block price_content %} {% endblock %} -->   
             <div class="head2">
                 <h2>Search Results</h2>
             </div>
